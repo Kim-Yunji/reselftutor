@@ -13,7 +13,7 @@ def sign_up_view(request):
         if user:
             return redirect('/')
         else:
-            return render(request, 'user/signup.html')
+            return render(request, 'User/signup.html')
     elif request.method == 'POST':  # POST 메서드로 요청이 들어 올 경우
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
@@ -22,16 +22,16 @@ def sign_up_view(request):
 
         if password != password2:
             # 페스워드가 같지 않은 경우
-            return render(request, 'user/signup.html', {'error':'패스워드를 확인해 주세요!'})
+            return render(request, 'User/signup.html', {'error':'패스워드를 확인해 주세요!'})
         else:
             if username == '' or password == '':
                 # 사용자 저장을 위한 username과 password가 필수라는 것을 얘기 해 줍니다.
-                return render(request, 'user/signup.html', {'error': '이름과 패스워드는 필수 입력정보 입니다!'})
+                return render(request, 'User/signup.html', {'error': '이름과 패스워드는 필수 입력정보 입니다!'})
 
             exist_user = get_user_model().objects.filter(username=username)
 
             if exist_user:
-                return render(request, 'user/signup.html', {'error':'이미 존재하는 사용자입니다.'})
+                return render(request, 'User/signup.html', {'error':'이미 존재하는 사용자입니다.'})
                 # 사용자가 존재하기 때문에 사용자를 저장하지 않고 회원가입 페이지를 다시 띄움
             else:
                 UserModel.objects.create_user(username=username, password=password, bio=bio)
@@ -49,14 +49,14 @@ def sign_in_view(request):
             return redirect('/')
 
         else:  # 오류화면을 출력하기 위해서는 render 함수를 사용해야함
-            return render(request, 'user/signin.html',{'error':'ID 와 패스워드를 확인해 주세요!'} )
+            return render(request, 'User/signin.html',{'error':'ID 와 패스워드를 확인해 주세요!'} )
 
     elif request.method == 'GET':
         user = request.user.is_authenticated
         if user:
             return redirect('/')
         else:
-            return render(request, 'user/signin.html')
+            return render(request, 'User/signin.html')
 
 
 @login_required # 사용자가 로그인이 되어야만 이용할 수 있는 함수
@@ -70,7 +70,7 @@ def user_view(request):
     if request.method == 'GET':
         # 사용자를 불러오기, exclude와 request.user.username 를 사용해서 '로그인 한 사용자'를 제외하기
         user_list = UserModel.objects.all().exclude(username=request.user.username)
-        return render(request, 'user/user_list.html', {'user_list': user_list})
+        return render(request, 'User/user_list.html', {'user_list': user_list})
 
 
 @login_required
