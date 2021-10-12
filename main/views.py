@@ -7,18 +7,18 @@ def self_study(request):
     if request.method == 'GET':  # GET 메서드로 요청이 들어 올 경우
         user = request.user.is_authenticated
         if user:
-            return render(request, 'main/Self.html')
+            return render(request, 'Main/Self.html')
         else:
-            return render(request, 'user/signin.html')
+            return render(request, 'User/signin.html')
 
 
 def lecture_study(request):
     if request.method == 'GET':  # GET 메서드로 요청이 들어 올 경우
         user = request.user.is_authenticated
         if user:
-            return render(request, 'main/Lecture.html')
+            return render(request, 'Main/Lecture.html')
         else:
-            return render(request, 'user/signin.html')
+            return render(request, 'User/signin.html')
 
 
 def gen1(camera):
